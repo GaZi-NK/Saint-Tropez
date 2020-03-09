@@ -2,13 +2,15 @@ package com.example.sainttropez
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,7 +19,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         webView.getSettings().setJavaScriptEnabled(true)
-        webView.loadUrl("file:///android_asset/html/index.html")
+        webView.setWebViewClient(WebViewClient())
+        webView.loadUrl("file:///android_asset/html/view-source_https___iinitoa-tyan.com.html")
 
         registerForContextMenu(webView)
     }
@@ -113,5 +116,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onContextItemSelected(item)
+    }
+
+    //戻るボタン
+    override fun onBackPressed() {
+        if (webView != null && webView.canGoBack()) webView.goBack() // if there is previous page open it
+        else super.onBackPressed() //if there is no previous page, close app
     }
 }
